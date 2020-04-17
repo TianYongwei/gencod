@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.ruoyi</groupId>
-	<artifactId>datacenter</artifactId>
+	<artifactId>gencod</artifactId>
 	<version>4.1.0</version>
 	<packaging>jar</packaging>
 
-	<name>datacenter</name>
+	<name>gencod</name>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
