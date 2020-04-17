@@ -21,7 +21,7 @@ public class Application
     {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(Application.class, args);
-        System.out.println("%%%%%%%%%%%%%%%%%%%闻天下-数据中心管理系统启动成功%%%%%%%%%%%%%%%%%%%% ");
+        System.out.println("启动成功。");
     }
 
     @Bean
