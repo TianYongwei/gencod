@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.bus.DictWebsiteType.mapper.DictWebsiteTypeMapper">
+    
+    <resultMap type="DictWebsiteType" id="DictWebsiteTypeResult">
+        <result property="websiteTypeId"    column="website_type_id"    />
+        <result property="websiteTypeName"    column="website_type_name"    />
+        <result property="websiteTypePid"    column="website_type_pid"    />
+        <result property="websiteTypeDescription"    column="website_type_description"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="parentName" column="parent_name" />
+    </resultMap>
+
+    <sql id="selectDictWebsiteTypeVo">
+        select website_type_id, website_type_name, website_type_pid, website_type_description, create_time, update_time, create_by from bus_dict_website_type
+    </sql>
+
+    <select id="selectDictWebsiteTypeList" parameterType="DictWebsiteType" resultMap="DictWebsiteTypeResult">
+        <include refid="selectDictWebsiteTypeVo"/>
+        <where>  
+            <if test="websiteTypeName != null  and websiteTypeName != ''"> and website_type_name like concat('%', #{websiteTypeName}, '%')</if>
+            <if test="websiteTypePid != null "> and website_type_pid = #{websiteTypePid}</if>
+            <if test="websiteTypeDescription != null  and websiteTypeDescription != ''"> and website_type_description = #{websiteTypeDescription}</if>
+        </where>
+        order by website_type_pid
+    </select>
+
+  <select id="selectAll" resultMap="DictWebsiteTypeResult">
+    <include refid="selectDictWebsiteTypeVo"/>
+        order by website_type_pid
+  </select>
+    
+    <select id="selectDictWebsiteTypeById" parameterType="Long" resultMap="DictWebsiteTypeResult">
+        select t.website_type_id, t.website_type_name, t.website_type_pid, t.website_type_description, t.create_time, t.update_time, t.create_by, p.website_type_name as parent_name
+        from bus_dict_website_type t
+        left join bus_dict_website_type p on p.website_type_id = t.website_type_pid
+        where t.website_type_id = #{websiteTypeId}
+    </select>
+        
+    <insert id="insertDictWebsiteType" parameterType="DictWebsiteType" useGeneratedKeys="true" keyProperty="websiteTypeId">
+        insert into bus_dict_website_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="websiteTypeName != null  and websiteTypeName != ''">website_type_name,</if>
+            <if test="websiteTypePid != null ">website_type_pid,</if>
+            <if test="websiteTypeDescription != null  and websiteTypeDescription != ''">website_type_description,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="createBy != null ">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="websiteTypeName != null  and websiteTypeName != ''">#{websiteTypeName},</if>
+            <if test="websiteTypePid != null ">#{websiteTypePid},</if>
+            <if test="websiteTypeDescription != null  and websiteTypeDescription != ''">#{websiteTypeDescription},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="createBy != null ">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDictWebsiteType" parameterType="DictWebsiteType">
+        update bus_dict_website_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="websiteTypeName != null  and websiteTypeName != ''">website_type_name = #{websiteTypeName},</if>
+            <if test="websiteTypePid != null ">website_type_pid = #{websiteTypePid},</if>
+            <if test="websiteTypeDescription != null  and websiteTypeDescription != ''">website_type_description = #{websiteTypeDescription},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="createBy != null ">create_by = #{createBy},</if>
+        </trim>
+        where website_type_id = #{websiteTypeId}
+    </update>
+
+    <delete id="deleteDictWebsiteTypeById" parameterType="Long">
+        delete from bus_dict_website_type where website_type_id = #{websiteTypeId}
+    </delete>
+
+    <delete id="deleteDictWebsiteTypeByIds" parameterType="String">
+        delete from bus_dict_website_type where website_type_id in 
+        <foreach item="websiteTypeId" collection="array" open="(" separator="," close=")">
+            #{websiteTypeId}
+        </foreach>
+    </delete>
+    
+</mapper>

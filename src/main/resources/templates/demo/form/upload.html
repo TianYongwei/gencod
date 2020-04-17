@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<th:block th:include="include :: header('文件上传')" />
+	<th:block th:include="include :: bootstrap-fileinput-css" />
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>文件上传控件 <small>https://github.com/kartik-v/bootstrap-fileinput</small></h5>
+                    </div>
+                    <div class="ibox-content">
+                    	<div class="form-group">
+                            <label class="font-noraml">简单示例</label>
+	                        <div class="file-loading">
+					            <input class="file" type="file" multiple data-min-file-count="1" data-theme="fas">
+					        </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="font-noraml">多文件上传</label>
+	                        <div class="file-loading">
+					            <input id="fileinput-demo-1" type="file" name="file" multiple>
+					        </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="font-noraml">相关参数详细信息</label>
+                            <div><a href="http://doc.ruoyi.vip/ruoyi/document/zjwd.html#bootstrap-fileinput" target="_blank">http://doc.ruoyi.vip/ruoyi/document/zjwd.html#bootstrap-fileinput</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-fileinput-js" />
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#fileinput-demo-1").fileinput({
+            'theme': 'fas',
+            'uploadUrl': ctx+'fileUploadShop/upload',
+            'deleteUrl': ctx+'fileUploadShop/delete',
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            showRemove:true,
+            showCancel:true,
+            uploadAsync: true, //默认异步上传
+            enctype: 'multipart/form-data',
+            layoutTemplates :{
+                actionDelete:'', //去除上传预览的缩略图中的删除图标
+                actionUpload:'',//去除上传预览缩略图中的上传图片；
+                actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
+            }
+            /* initialPreview: [
+                "/img/profile.jpg"
+            ] */
+        });
+        
+       $("#fileinput-demo-1").on("fileuploaded", function(event, data, previewId, index) {
+        	console.log(previewId);
+        	console.log(data);
+        });
+        $("#fileinput-demo-1").on("filesuccessremove",function(event, key, jqXHR, data){
+        	console.log('Key = ' + key);  
+            console.log(jqXHR);  
+            console.log(data); 
+           
+        });
+        
+        
+    });
+    </script>
+</body>
+</html>
