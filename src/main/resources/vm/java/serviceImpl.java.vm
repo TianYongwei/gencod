@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 import ${packageName}.${businessName}.mapper.${ClassName}Mapper;
 import ${packageName}.${businessName}.domain.${ClassName};
 import ${packageName}.${businessName}.service.I${ClassName}Service;
-import com.ruoyi.common.utils.text.Convert;
-
 /**
  * ${functionName}Service业务层处理
  * 
@@ -97,7 +95,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     @Override
     public int delete${ClassName}ByIds(String ids)
     {
-        return ${className}Mapper.delete${ClassName}ByIds(Convert.toStrArray(ids));
+        return ${className}Mapper.delete${ClassName}ByIds(ids.split(",|，"));
     }
 
     /**
