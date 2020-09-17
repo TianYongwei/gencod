@@ -97,6 +97,7 @@ public class VelocityUtils
         templates.add("vm/java/service.java.vm");
         templates.add("vm/java/serviceImpl.java.vm");
         templates.add("vm/java/controller.java.vm");
+        templates.add("vm/java/api.java.vm");
         templates.add("vm/xml/mapper.xml.vm");
         if (GenConstants.TPL_CRUD.equals(tplCategory))
         {
@@ -152,6 +153,10 @@ public class VelocityUtils
         else if (template.contains("controller.java.vm"))
         {
             fileName = StringUtils.format("{}/{}/controller/{}Controller.java", javaPath, businessName, className);
+        }
+        else if (template.contains("api.java.vm"))
+        {
+            fileName = StringUtils.format("{}/{}/controller/Api{}Controller.java", javaPath, businessName, className);
         }
         else if (template.contains("mapper.xml.vm"))
         {
@@ -224,6 +229,10 @@ public class VelocityUtils
         else if (template.contains("controller.java.vm"))
         {
             fileName = StringUtils.format("{}/{}/controller/{}Controller.java", javaPath, businessName, className);
+        }
+        else if (template.contains("api.java.vm"))
+        {
+            fileName = StringUtils.format("{}/{}/controller/Api{}Controller.java", javaPath, businessName, className);
         }
         else if (template.contains("mapper.xml.vm"))
         {
