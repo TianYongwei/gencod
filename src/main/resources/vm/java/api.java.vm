@@ -1,0 +1,99 @@
+package ${packageName}.${businessName}.controller;
+
+import java.util.List;
+
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import ${packageName}.${businessName}.domain.${ClassName};
+import ${packageName}.${businessName}.service.I${ClassName}Service;
+import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.domain.AjaxResult;
+import javax.annotation.Resource;
+#if($table.crud)
+import com.ruoyi.framework.web.page.TableDataInfo;
+#elseif($table.tree)
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.framework.web.domain.Ztree;
+
+#end
+
+@Controller
+@RequestMapping("/api/backend/${moduleName}/${businessName}")
+public class Api${ClassName}Controller extends BaseController
+{
+    @Resource
+    private I${ClassName}Service ${className}Service;
+
+#if($table.crud)
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list(${ClassName} ${className})
+    {
+        startPage();
+        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+        return getDataTable(list);
+    }
+#elseif($table.tree)
+    @PostMapping("/list")
+    @ResponseBody
+    public List<${ClassName}> list(${ClassName} ${className})
+    {
+        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+        return list;
+    }
+#end
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(${ClassName} ${className})
+    {
+        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+        ExcelUtil<${ClassName}> util = new ExcelUtil<${ClassName}>(${ClassName}.class);
+        return util.exportExcel(list, "${businessName}");
+    }
+
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(${ClassName} ${className})
+    {
+        return toAjax(${className}Service.insert${ClassName}(${className}));
+    }
+
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(${ClassName} ${className})
+    {
+        return toAjax(${className}Service.update${ClassName}(${className}));
+    }
+
+#if($table.crud)
+    @PostMapping( "/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        return toAjax(${className}Service.delete${ClassName}ByIds(ids));
+    }
+#elseif($table.tree)
+    @GetMapping("/remove/{${pkColumn.javaField}}")
+    @ResponseBody
+    public AjaxResult remove(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
+    {
+        return toAjax(${className}Service.delete${ClassName}ById(${pkColumn.javaField}));
+    }
+#end
+#if($table.tree)
+#set($BusinessName=$businessName.substring(0,1).toUpperCase() + ${businessName.substring(1)})
+    @GetMapping("/treeData")
+    @ResponseBody
+    public List<Ztree> treeData()
+    {
+        List<Ztree> ztrees = ${className}Service.select${ClassName}Tree();
+        return ztrees;
+    }
+#end
+}
