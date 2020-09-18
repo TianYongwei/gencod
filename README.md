@@ -4,6 +4,9 @@ generate boilerplate code for Java web development, inspired by Ruoyi.
 base on UML,not based on Java class,nor Database table.
 从小处出发做到极致。
 
+1. 新增表的情况
+2. 加字段的情况
+
 ## todo
 - [ ] 使用表单创建属性，能生成代码和表创建语句
 - [ ] 使用DDD模式，生成的代码合并到一个文件夹中
