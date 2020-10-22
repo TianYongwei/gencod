@@ -8,7 +8,7 @@ spring:
             master:
                 url: jdbc:mysql://114.67.65.154:3369/gencode?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
                 username: root
-                password: root132456
+                password: ${mysqlpassword}
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭
